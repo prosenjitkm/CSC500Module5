@@ -1,16 +1,16 @@
 import random
 
-# Here i am adding a list of random names for students
+# Define a list of random names for students
 names = ["Samiya Rahaman", "Fardeen Khan", "Alice Johnson", "John Doe", "Sarah Ahmed",
          "Mohammed Ali", "Emma Watson", "Isabella Smith", "Liam Brown", "Noah Davis"]
 
 
-# Here is a function to generate a random student ID
+# Function to generate a random student ID
 def generate_student_id():
     return f"2024{random.randint(100000, 999999)}"
 
 
-# Here is a function to randomly generate student data ensuring GPA if degree is present
+# Function to randomly generate student data ensuring GPA if degree is present
 def generate_student():
     has_bachelor = random.choice([True, False])
     has_graduate = random.choice([True, False])
@@ -35,12 +35,11 @@ students = [generate_student() for _ in range(10)]
 
 # Function to check eligibility and print result
 def print_admission_status(student):
-    # Determine eligibility
-    if student["has_bachelor_degree"] and student["undergraduate_gpa"] is not None and student[
-        "undergraduate_gpa"] >= 3.0:
+    # Determine eligibility using `or` condition
+    if (student["has_bachelor_degree"] and student["undergraduate_gpa"] is not None and student[
+        "undergraduate_gpa"] >= 3.0) or \
+            (student["has_graduate_degree"] and student["graduate_gpa"] is not None and student["graduate_gpa"] >= 3.0):
         status = "is eligible for regular admission"
-    elif student["has_graduate_degree"] and student["graduate_gpa"] is not None and student["graduate_gpa"] >= 3.0:
-        status = "is eligible for regular admission based on graduate degree"
     elif student["has_bachelor_degree"] and student["undergraduate_gpa"] is not None and student[
         "graduate_gpa"] is not None and \
             student["undergraduate_gpa"] < 3.0 and student["graduate_gpa"] < 3.0:
@@ -48,7 +47,7 @@ def print_admission_status(student):
     else:
         status = "is not eligible for graduate admission"
 
-    # Template for the output
+    # Prepare degree information for output
     if student["has_bachelor_degree"]:
         degree_info = f"with undergraduate degree and GPA {student['undergraduate_gpa']}"
     elif student["has_graduate_degree"]:
@@ -60,6 +59,6 @@ def print_admission_status(student):
     print(f"ID: {student['id']} {student['name']} {degree_info} {status}.")
 
 
-# Loop to print results for all students
+# Simplified loop to print results for all students
 for student in students:
     print_admission_status(student)
